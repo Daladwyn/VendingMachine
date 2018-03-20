@@ -233,12 +233,26 @@ namespace VendingMachine
         /// <returns></returns>
         static string ValidateChosenProduct(string name)
         {
+            int spacePlace = 0;
             name = name.Trim();
+            for (int i = 0; (i < name.Length); i++)
+            {
+                if (Convert.ToString(name[i]) == " ")
+                {
+                    spacePlace = i;
+                }
+            }
             string firstOldLetter = Convert.ToString(name[0]);
+            string secondOldLetter = Convert.ToString(name[spacePlace + 1]);
             string firstLetter = firstOldLetter.ToUpper();
+            string secondLetter = secondOldLetter.ToUpper();
             for (int i = 1; i < (name.Length); i++)
             {
                 firstLetter = firstLetter + name[i];
+                if(i == (spacePlace + 1))
+                {
+                    firstLetter = firstLetter + secondLetter;
+                }
             }
             name = firstLetter;
             return name;
