@@ -16,10 +16,16 @@ namespace VendingMachine
             BasketId = 0;
             BasketTotalPrice = 0;
         }
-
+        /// <summary>
+        /// This function lets the user add a product and amount of that item to buying basket
+        /// </summary>
+        /// <param name="chosenProduct is the name of the product to be added."></param>
+        /// <param name="amount is the number of items to be added."></param>
+        /// <param name="products is the list of products that is available."></param>
+        /// <param name="contents is a list that the product is to be added to."></param>
+        /// <returns></returns>
         public BasketContents AddProductToBasket(string chosenProduct, int amount, List<Products> products, List<BasketContents> contents)
         {
-
             BasketContents itemToAdd = new BasketContents();
             itemToAdd.BasketProductName = chosenProduct;
             foreach (var element in products)
@@ -47,9 +53,9 @@ namespace VendingMachine
             }
             return BasketTotalPrice;
         }
-    
+
         /// <summary>
-        /// This function calulates the aoumt of change and which notes/coins to be returned.
+        /// This function calulates the amount of change and which notes/coins to be returned.
         /// </summary>
         /// <param name="remainingChange"></param>
         public void Purchase(int remainingChange)
@@ -70,16 +76,19 @@ namespace VendingMachine
                         arrayIndex--;
                     }
                 } while (remainingChange > 0);
-
+                Console.WriteLine("Please hit any key to continue.");
                 Console.ReadKey();
             }
         }
-
+        /// <summary>
+        /// This function lists the products the user so far have added
+        /// </summary>
+        /// <param name="contents is the list of items that have been added."></param>
+        /// <returns></returns>
         public int ShowBasket(List<BasketContents> contents)
         {
             Console.Clear();
             BasketTotalPrice = 0;
-
             Console.WriteLine($"Your basket contains the following items:\n");
             Console.WriteLine($"Name{"",-16}Amount{"",-4}Price{"",-5}Total Price{"",-5}");
             foreach (var element in contents)
@@ -89,8 +98,7 @@ namespace VendingMachine
                 BasketTotalPrice = BasketTotalPrice + element.BasketTotalProductPrice;
             }
             Console.WriteLine($"Total Price is: {BasketTotalPrice}");
-
-
+            Console.WriteLine("\nPlease hit any key to continue");
             Console.ReadKey();
             return BasketTotalPrice;
         }

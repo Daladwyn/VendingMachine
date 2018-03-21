@@ -45,13 +45,9 @@ namespace VendingMachine
                     }
                 }
             }
+            Console.WriteLine("Please hit any key to continue.");
             Console.ReadKey();
             return;
         }
-
-
-
-
-
     }
 }

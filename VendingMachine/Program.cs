@@ -30,9 +30,7 @@ namespace VendingMachine
             };
 
             BuyingBasket MyBasket = new BuyingBasket();
-
             string chosenProduct = "";
-            // bool productThatExists = true;
             bool exitVendingMachine = false;
             int numberOfItemsToAdd = 0;
             int valueOfBasket = 0;
@@ -50,8 +48,9 @@ namespace VendingMachine
                 Console.WriteLine("3. Examine a product.");
                 Console.WriteLine("4. Show my basket.");
                 Console.WriteLine("5. Add a product to basket.");
-                Console.WriteLine("6. Make a purchase.");
-                Console.WriteLine("7. Exit the vending machine.");
+                Console.WriteLine("6. Cancel a purchase.");
+                Console.WriteLine("7. Make a purchase.");
+                Console.WriteLine("8. Exit the vending machine.");
                 Console.Write($"Your choise is: ");
                 menuChoise = 0;
                 try
@@ -72,7 +71,7 @@ namespace VendingMachine
                         Console.Clear();
                         Console.WriteLine("The following products is available in this vending machine.\nName\t\t\tDescription\t\t\t\tPrice");
                         Products.Examine(allProducts);
-
+                        Console.WriteLine("Please hit any key to continue");
                         Console.ReadKey();
                         break;
                     case 3: //shows more detailed info about a product 
@@ -107,7 +106,7 @@ namespace VendingMachine
                                 element.ShowProductSpecifics(chosenProduct, allProducts);
                             }
                         }
-                        Console.ReadKey();
+                        //Console.ReadKey();
                         break;
                     case 4://shows the contents of the basket
                         valueOfBasket = MyBasket.ShowBasket(MyBasket.MyBasketContents);
@@ -134,7 +133,13 @@ namespace VendingMachine
                         MyBasket.MyBasketContents.Add(MyBasket.AddProductToBasket(chosenProduct, numberOfItemsToAdd, allProducts, MyBasket.MyBasketContents));
                         valueOfBasket = MyBasket.BasketValue(MyBasket.MyBasketContents);
                         break;
-                    case 6: //let the user get the items so far chosen and subtracts the value of the items from the inserted money.
+                    case 6:
+                        MyBasket.MyBasketContents.Clear();
+                        valueOfBasket = 0;
+                        MyBasket.Purchase(totalAmountOfMoney);
+                        totalAmountOfMoney = 0;
+                        break;
+                    case 7://let the user get the items so far chosen and subtracts the value of the items from the inserted money.
                         if (totalAmountOfMoney <= valueOfBasket)
                         {
                             Console.WriteLine("You have not inserted enough money!!");
@@ -144,12 +149,12 @@ namespace VendingMachine
                         change = totalAmountOfMoney - valueOfBasket;
                         totalAmountOfMoney = 0;
                         valueOfBasket = 0;
-                        Console.ReadKey();
+                        //Console.ReadKey();
                         MyBasket.Purchase(change);
                         Products.Use(MyBasket.MyBasketContents, allProducts);
                         MyBasket.MyBasketContents.Clear();
                         break;
-                    case 7: //exits the vending machine.
+                    case 8: //exits the vending machine.
                         exitVendingMachine = true;
                         break;
                     default:
@@ -233,12 +238,27 @@ namespace VendingMachine
         /// <returns></returns>
         static string ValidateChosenProduct(string name)
         {
+            int spacePlace = 0;
             name = name.Trim();
+            for (int i = 0; i < name.Length; i++)
+            {
+                if (Convert.ToString(name[i]) == " ")
+                {
+                    spacePlace = i;
+                }
+            }
             string firstOldLetter = Convert.ToString(name[0]);
+            string secondOldLetter = Convert.ToString(name[spacePlace + 1]);
             string firstLetter = firstOldLetter.ToUpper();
+            string secondLetter = secondOldLetter.ToUpper();
             for (int i = 1; i < (name.Length); i++)
             {
                 firstLetter = firstLetter + name[i];
+                if (i == (spacePlace))
+                {
+                    firstLetter = firstLetter + secondLetter;
+                    i++;
+                }
             }
             name = firstLetter;
             return name;

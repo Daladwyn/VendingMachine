@@ -11,9 +11,11 @@ namespace VendingMachine
         internal int Volume { get; set; }
         internal string VolumeSet { get; set; }
 
-
-
-
+        /// <summary>
+        /// this function list the product specific details
+        /// </summary>
+        /// <param name="productToExamine is the input from user, what item to be viewed. "></param>
+        /// <param name="listOfProducts is a list of products presently in the vending machine."></param>
         public override void ShowProductSpecifics(string productToExamine, List<Products> listOfProducts)
         {
             bool isProductInfoListed = false;
@@ -34,6 +36,7 @@ namespace VendingMachine
             {
                 isProductInfoListed = false;
             }
+            Console.WriteLine("Please hit any key to continue.");
             Console.ReadKey();
             return;
         }
